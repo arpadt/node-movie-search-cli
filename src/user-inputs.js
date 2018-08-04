@@ -1,7 +1,6 @@
 const inquirer = require('inquirer');
-const vorpal = require('vorpal')();
 
-module.exports.getMovieDataFromUser = () => {
+const getMovieTitleFromUser = () => {
   return inquirer.prompt([
     {
       type: 'input',
@@ -24,20 +23,31 @@ module.exports.getMovieDataFromUser = () => {
   ]);
 };
 
-module.exports.getSelectedMovieFromUser = (movies) => {
-  const titlesAndYears = movies.Search.map(({ Title: title, Year: year, imdbID: id }) => {
-    return {
-      name: `${ title } (${ year })`,
-      value: id
-    };
-  });
+const getSelectedMovieFromUser = (movies) => {
+  if (movies.Error) {
+    return Promise.reject('The requested movie is not found.');
+  }
 
   return inquirer.prompt([
     {
       type: 'list',
       name: 'movieId',
       message: 'Select a movie from the list',
-      choices: titlesAndYears
+      choices: createMovieTitleList(movies.Search)
     }
   ]);
+};
+
+const createMovieTitleList = (movies) => {
+  return movies.map(({ Title: title, Year: year, imdbID: id }) => {
+    return {
+      name: `${ title } (${ year })`,
+      value: id
+    };
+  });
+};
+
+module.exports = {
+  getMovieTitleFromUser,
+  getSelectedMovieFromUser
 };
