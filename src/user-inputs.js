@@ -49,5 +49,6 @@ const createMovieTitleList = (movies) => {
 
 module.exports = {
   getMovieTitleFromUser,
-  getSelectedMovieFromUser
+  getSelectedMovieFromUser,
+  createMovieTitleList
 };
