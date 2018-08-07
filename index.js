@@ -2,19 +2,15 @@ const chalk = require('chalk');
 const figlet = require('figlet');
 const vorpal = require('vorpal')();
 
-const { getMovieDataFromDB, getMovieDetails } = require('./src/requests');
-const { getMovieTitleFromUser, getSelectedMovieFromUser } = require('./src/user-inputs');
+const { getMovieDataFromDB, getMovieDetails } = require('./modules/requests');
+const { getMovieTitleFromUser, getSelectedMovieFromUser } = require('./modules/user-inputs');
 
 figlet('Movies', (_, data) => {
   console.log(chalk.cyan(data));
 
   const apiKey = process.env.API_KEY;
-  try {
-    if (!apiKey) {
-      throw new Error('Please enter your API key!');
-    }
-  } catch (error) {
-    console.log(chalk.red(error.message));
+  if (!apiKey) {
+    console.log(chalk.red('Please enter your API key!'));
     return;
   }
 
@@ -44,7 +40,6 @@ figlet('Movies', (_, data) => {
     })
     .cancel(() => {
       vorpal.log(chalk.red('Search has been interrupted.'));
-      throw new Error();
     });
 
   vorpal

@@ -7,11 +7,7 @@ const getMovieTitleFromUser = () => {
       name: 'movieTitle',
       message: 'Enter the title or part of the title',
       filter: (title) => title.toLowerCase(),
-      validate: (input) => {
-        if (input) return true;
-
-        return 'Please enter title!';
-      }
+      validate: isTitleEntered
     },
     {
       type: 'list',
@@ -21,6 +17,11 @@ const getMovieTitleFromUser = () => {
       filter: (type) => type.toLowerCase()
     }
   ]);
+};
+
+const isTitleEntered = (title) => {
+  if (title) return true;
+  return 'Please enter a title!';
 };
 
 const getSelectedMovieFromUser = (movies) => {
@@ -48,7 +49,8 @@ const createMovieTitleList = (movies) => {
 };
 
 module.exports = {
+  createMovieTitleList,
+  isTitleEntered,
   getMovieTitleFromUser,
-  getSelectedMovieFromUser,
-  createMovieTitleList
+  getSelectedMovieFromUser
 };

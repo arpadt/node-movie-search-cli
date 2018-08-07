@@ -3,7 +3,11 @@ const chaiAsPromised = require('chai-as-promised');
 const inquirer = require('inquirer');
 const sinon = require('sinon');
 
-const { createMovieTitleList, getSelectedMovieFromUser } = require('./user-inputs');
+const {
+  createMovieTitleList,
+  getSelectedMovieFromUser,
+  isTitleEntered
+} = require('./user-inputs');
 
 const { expect } = chai.use(chaiAsPromised);
 
@@ -60,4 +64,24 @@ describe('#user-inputs', () => {
 
     expect(nameAndValue).to.be.deep.equal(expectedNameAndValue);
   });
+
+  describe('#isTitleEntered validations', () => {
+    it('should return true if a string is entered', () => {
+      const userInput = 'Taken';
+
+      const validationResult = isTitleEntered(userInput);
+
+      expect(validationResult).to.be.true;
+    });
+
+    it('returns a warning if nothing is entered', () => {
+      const userInput = '';
+
+      const validationResult = isTitleEntered(userInput);
+
+      expect(validationResult).to.be.equal('Please enter a title!');
+    });
+  });
 });
+
+
