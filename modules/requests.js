@@ -3,7 +3,7 @@ const rp = require('request-promise-native');
 const getMovieDataFromDB = (movieTitle, movieType, apiKey) => {
   const options = {
     method: 'GET',
-    uri: `http://www.omdbapi.com/?s=${ movieTitle }&type=${ movieType }&apikey=${ apiKey }`,
+    uri: `https://www.omdbapi.com/?s=${ movieTitle }&type=${ movieType }&apikey=${ apiKey }`,
     json: true
   };
 
@@ -13,7 +13,7 @@ const getMovieDataFromDB = (movieTitle, movieType, apiKey) => {
 const getMovieDetails = (movieId, apiKey) => {
   const options = {
     method: 'GET',
-    uri: `http://www.omdbapi.com/?i=${ movieId }&apikey=${ apiKey }`,
+    uri: `https://www.omdbapi.com/?i=${ movieId }&apikey=${ apiKey }`,
     json: true
   };
 
